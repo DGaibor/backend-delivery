@@ -8,15 +8,19 @@ export class UsersService {
   constructor(private readonly prismaService: PrismaService) {}
 
   async create(createUserDto: CreateUserDto) {
-    console.log(createUserDto);
-    await this.prismaService.user.create({
-      data: {
-        email: createUserDto.email,
-        password: createUserDto.password,
-        birthdate: createUserDto.birthDate,
-      },
-    });
-    return 'This action adds a new user';
+    try {
+      await this.prismaService.user.create({
+        data: {
+          email: createUserDto.email,
+          password: createUserDto.password,
+          birthdate: createUserDto.birthDate,
+        },
+      });
+      return 'User created successfully';
+    } catch (error: unknown) {
+      console.log(error);
+      return 'Error creating user';
+    }
   }
 
   findAll() {
