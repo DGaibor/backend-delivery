@@ -12,15 +12,20 @@ export class ProductsService {
         data: {
           name: createProductDto.name,
           description: createProductDto.description,
-          price: createProductDto.price,
+          price: Number(createProductDto.price),
           image: createProductDto.image,
+          category: createProductDto.category,
+          
         },
       });
-    } catch (e) {}
+      return 'Product created successfully';
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   findAll() {
-    return `This action returns all products`;
+    return this.prismaService.product.findMany();
   }
 
   findOne(id: number) {
